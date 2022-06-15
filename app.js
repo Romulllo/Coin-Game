@@ -12,28 +12,35 @@ function isTouching(a, b) {
 
 const avatar = document.querySelector('#player');
 const coin = document.querySelector('#coin');
+const score = document.querySelector('#score');
 
 window.addEventListener('keyup', function(e) {
   if (e.key === 'ArrowDown' || e.key === 'Down') {
-    const currTop = extractPos(avatar.style.top);
-    avatar.style.top = `${currTop + 50}px`;
+    moveVertical(avatar, 50);
   }
   else if (e.key === 'ArrowUp' || e.key === 'Up') {
-    const currTop = extractPos(avatar.style.top);
-    avatar.style.top = `${currTop - 50}px`;
+    moveVertical(avatar, -50);
   }
   else if (e.key === 'ArrowRight' || e.key === 'Right') {
-    const currLeft = extractPos(avatar.style.left);
-    avatar.style.left = `${currLeft + 50}px`;
+    moveHorizontal(avatar, 50);
     avatar.style.transform = 'scale(1,1)';
   }
   else if (e.key === 'ArrowLeft' || e.key === 'Left') {
-    const currLeft = extractPos(avatar.style.left);
-    avatar.style.left = `${currLeft - 50}px`;
+    moveHorizontal(avatar, -50);
     avatar.style.transform = 'scale(-1,1)';
   }
-  if (isTouching(avatar, coin)) moveCoin();
+  if (isTouching(avatar, coin)) moveCoin() & addScore(score);
 });
+
+const moveVertical = (element, amount) => {
+  const currTop = extractPos(element.style.top);
+  element.style.top = `${currTop + amount}px`;
+};
+
+const moveHorizontal = (element, amount) => {
+  const currLeft = extractPos(element.style.left);
+  element.style.left = `${currLeft + amount}px`;
+};
 
 const extractPos = (pos) => {
   if (!pos) return 100;
@@ -48,3 +55,8 @@ const moveCoin = () => {
 };
 
 moveCoin();
+
+const addScore = (score) => {
+  const currScore = parseInt(score.textContent.slice(-2));
+  score.textContent = `Score = ${Math.floor(currScore + 1)}`
+}

@@ -4,3 +4,7 @@ img {
 	top: 100px;
 	left: 100px;
 }
+
+h1, h3 {
+  text-align: center;
+}
